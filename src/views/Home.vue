@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="section">
     <h2 class="title">{{ title }}</h2>
     <div class="container">
       <div v-for="project in projects" class="card" :key="project.id">

@@ -1,5 +1,5 @@
 <template>
-  <div class="section-center">
+  <div class="section-center section">
     <h2 className="title">Vue assistant</h2>
     <div class="alert-container">
       <div v-if="showAlert" :class="alert.type" class="alert-box">
