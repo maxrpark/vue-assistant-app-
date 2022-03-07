@@ -120,7 +120,7 @@ export default {
           this.todo.push(newTask);
           this.alertFunction('success', 'Task added');
         } else {
-          this.todo.forEach((item) => {
+          this.todo.map((item) => {
             if (item.id === this.itemId) {
               item.value = this.task;
             }
@@ -136,7 +136,7 @@ export default {
     // remove edit
     editItem(id) {
       this.isEditing = true;
-      this.todo.forEach((item) => {
+      this.todo.map((item) => {
         if (item.id === id) {
           this.task = item.value;
         }
@@ -146,7 +146,7 @@ export default {
     },
     // remove complete
     completeItem(id) {
-      this.todo.forEach((item) => {
+      this.todo.map((item) => {
         if (item.id === id) {
           if (!item.isComplete) {
             this.alertFunction('success', 'Task Completed');
