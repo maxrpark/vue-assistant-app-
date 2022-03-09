@@ -174,7 +174,7 @@ export default {
       this.todo = [];
       this.task = '';
       this.editItem = false;
-      this.alertFunction('danger', 'All items removed');
+      this.alertFunction('danger', 'All tasks removed');
       localStorage.setItem('vuetodoList', JSON.stringify(this.todo));
     },
     alertFunction(type, messege) {
