@@ -109,14 +109,13 @@ export default {
     },
     // remove all
     handleSubmit() {
-      if (this.task.length) {
+      if (this.task.length && this.task.trim() !== '') {
         if (!this.isEditing) {
           const newTask = {
             id: new Date().getTime().toString(),
             value: this.task,
             isComplete: false,
           };
-          this.task = '';
           this.todo.push(newTask);
           this.alertFunction('success', 'Task added');
         } else {
@@ -125,12 +124,14 @@ export default {
               item.value = this.task;
             }
           });
-          this.task = '';
           this.itemId = null;
           this.isEditing = false;
           this.alertFunction('success', 'Task Edited');
         }
+        this.task = '';
         localStorage.setItem('vuetodoList', JSON.stringify(this.todo));
+      } else {
+        this.alertFunction('danger', 'Task can not be empty!');
       }
     },
     // remove edit
@@ -146,6 +147,8 @@ export default {
     },
     // remove complete
     completeItem(id) {
+      this.isEditing = false;
+      this.task = '';
       this.todo.map((item) => {
         if (item.id === id) {
           if (!item.isComplete) {
@@ -158,6 +161,8 @@ export default {
     },
     // remove delete
     deleteItem(id) {
+      this.isEditing = false;
+      this.task = '';
       this.todo = this.todo.filter((item) => {
         return item.id !== id;
       });
@@ -167,6 +172,8 @@ export default {
     // remove all
     removeAll() {
       this.todo = [];
+      this.task = '';
+      this.editItem = false;
       this.alertFunction('danger', 'All items removed');
       localStorage.setItem('vuetodoList', JSON.stringify(this.todo));
     },
