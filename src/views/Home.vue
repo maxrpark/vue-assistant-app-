@@ -1,6 +1,7 @@
 <template>
   <div class="section">
     <h2 class="title">{{ title }}</h2>
+    <h3 class="title">Same App with different frameworks or languages</h3>
     <div class="container">
       <div v-for="project in projects" class="card" :key="project.id">
         <ProjectsCard :project="project" />
