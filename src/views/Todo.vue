@@ -1,23 +1,10 @@
 <template>
   <div class="section-center section">
     <h2 className="title">Vue assistant</h2>
-    <div class="alert-container">
-      <div v-if="showAlert" :class="alert.type" class="alert-box">
-        <p>{{ alert.messege }}</p>
-      </div>
-    </div>
+    <Alert :alert="alert" :showAlert="showAlert" />
     <section class="main-container">
       <h2>Task List</h2>
-      <form @submit.prevent="handleSubmit" class="form-container">
-        <input
-          v-model="task"
-          type="text"
-          class="input-control"
-          placeholder="Type something..."
-          maxlength="25"
-        />
-      </form>
-
+      <Form ref="form" @handleSubmit="handleSubmit" />
       <div class="todo-list">
         <ul class="todo-container">
           <li
@@ -45,9 +32,13 @@
 
 <script>
 import TodoItem from '../components/TodoItem.vue';
+import Alert from '../components/Alert.vue';
+import Form from '../components/Form.vue';
 export default {
   components: {
     TodoItem,
+    Alert,
+    Form,
   },
   mounted() {
     this.setItems();
@@ -79,7 +70,9 @@ export default {
       }
     },
     // remove all
-    handleSubmit() {
+    handleSubmit(task) {
+      this.task = task;
+
       if (this.task.length && this.task.trim() !== '') {
         if (!this.isEditing) {
           const newTask = {
@@ -99,7 +92,8 @@ export default {
           this.isEditing = false;
           this.alertFunction('success', 'Task Edited');
         }
-        this.task = '';
+        this.$refs.form.task = '';
+
         localStorage.setItem('vuetodoList', JSON.stringify(this.todo));
       } else {
         this.alertFunction('danger', 'Task can not be empty!');
@@ -119,7 +113,7 @@ export default {
     // remove complete
     completeItem(id) {
       this.isEditing = false;
-      this.task = '';
+      this.$refs.form.task = '';
       this.todo.map((item) => {
         if (item.id === id) {
           if (!item.isComplete) {
@@ -133,7 +127,7 @@ export default {
     // remove delete
     deleteItem(id) {
       this.isEditing = false;
-      this.task = '';
+      this.$refs.form.task = '';
       this.todo = this.todo.filter((item) => {
         return item.id !== id;
       });
@@ -143,7 +137,7 @@ export default {
     // remove all
     removeAll() {
       this.todo = [];
-      this.task = '';
+      this.$refs.form.task = '';
       this.editItem = false;
       this.alertFunction('danger', 'All tasks removed');
       localStorage.setItem('vuetodoList', JSON.stringify(this.todo));
