@@ -72,7 +72,6 @@ export default {
     // remove all
     handleSubmit(task) {
       this.task = task;
-
       if (this.task.length && this.task.trim() !== '') {
         if (!this.isEditing) {
           const newTask = {
